@@ -21,3 +21,4 @@ zone3: us-east-1c
 zone4: us-east-1d
 zone5: us-east-1f
    
+state: present
