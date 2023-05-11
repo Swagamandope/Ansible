@@ -78,6 +78,7 @@
        resource_tags:
          Name: vprofileprivsub2
      register: privsub2_out
+
   
    - name: create Private Subnet 3 in Zone3
      ec2_vpc_subnet:
@@ -90,4 +91,14 @@
        resource_tags:
          Name: vprofileprivsub3
      register: privsub3_out
+     
+     
+   - name: internet gateway
+     ec2_vpc_igw:
+       vpc_id: "{{vpcout.vpc.id}}"
+       region: "{{region}}"
+       state: "{{state}}"
+       resource_tags:
+         Name: vprofileigw
+     register: igw_out
   
