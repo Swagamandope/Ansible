@@ -55,3 +55,4 @@
         group_id: "{{bastionsg_out.group_id}}"
         vpc_subnet_id: "{{pubsub1id}}"
       register: bastionhost_out
+      #
