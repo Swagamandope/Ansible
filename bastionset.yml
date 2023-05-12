@@ -24,10 +24,9 @@
 
     - name: create SG for bastion host
       ec2_group:
-        name: Bastion SG
+        name: Bastion_SG
         description: allow port 22 from anywhere
         vpc_id: "{{vpcid}}"
-        profile: "{{ aws_profile }}"
         region: "{{region}}"
         rules:
           - proto: tcp
