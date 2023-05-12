@@ -1,4 +1,4 @@
-vpc.id: vpc-03aae95d46064f76d
+vpcid: vpc-03aae95d46064f76d
 pubsub1id: subnet-0ead66a400eac3026
 pubsub2id: subnet-07cd52d4112db3c7d
 pubsub3id: subnet-0007939ea05bbf969
