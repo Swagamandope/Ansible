@@ -17,7 +17,7 @@
 
     - name: Save key
       copy:
-        content: "{{key_out.private_key}}"
+        content: "{{key_out.key.private_key}}"
         dest: "./bastion-key.pem"
         mode: 0600
       when: key_out.changed
@@ -54,4 +54,5 @@
             Project: vprofile
             Owner:  devops
         group_id: "{{bastionsg_out.group_id}}"
+        vpc_subnet_id: "{{pubsub1id}}"
       register: bastionhost_out
