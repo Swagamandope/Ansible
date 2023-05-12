@@ -36,7 +36,7 @@
       register: bastionsg_out
     
     - name: creating bastion host
-      ec2:
+      ec2_instance:
         key_name: vprofile_key
         region: "{{region}}"
         instance_type: t2.micro
