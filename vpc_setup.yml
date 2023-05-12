@@ -155,3 +155,16 @@
        -  igw_out.gateway_id
        -  privRT_out.route_table.id
        -  pubRT_out.route_table.id
+
+   - set_fact:
+        vpc.id: "{{vpcout.vpc.id}}"
+        pubsub1id: "{{pubsub1_out.subnet.id}}"
+        pubsub2id: "{{pubsub2_out.subnet.id}}"
+        pubsub3id: "{{pubsub3_out.subnet.id}}"
+        privsub1id: "{{privsub1_out.subnet.id}}"
+        privsub2id: "{{privsub2_out.subnet.id}}"
+        privsub3id: "{{privsub3_out.subnet.id}}"
+        natgwid: "{{natgw.nat_gateway_id}}"
+        igwid: "{{igw_out.gateway_id}}"
+        privRTid: "{{privRT_out.route_table.id}}"
+        pubRTid": "{{pubRT_out.route_table.id}}"   
