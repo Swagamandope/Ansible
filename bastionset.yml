@@ -36,11 +36,11 @@
       register: bastionsg_out
     
     - name: creating bastion host
-      ec2_instance:
+      ec2:
         key_name: vprofile-key
         region: "{{region}}"
         instance_type: t2.micro
-        image: ami-0889a44b331db0194
+        image: "{{bastion_ami}}"
         wait: yes
         wait_timeout: 180
         instance_tags:
