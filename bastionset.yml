@@ -40,7 +40,7 @@
         key_name: vprofile-key
         region: "{{region}}"
         instance_type: t2.micro
-        image: "{{bastion_ami}}"
+        image: ami-0889a44b331db0194
         wait: yes
         wait_timeout: 180
         instance_tags:
