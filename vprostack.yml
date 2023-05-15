@@ -54,6 +54,17 @@
             group_id: "{{BastionSGid}}"
      register: vprostacksg_out
 
+   - name: update SG with on SG
+     ec2_group:
+        name: vprostack-sg
+        description: allow 22
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        purge_rules: no
+        rules:
+         -proto: all
+         group_id: "{{vprostacksg_out.groupid}}"
+ 
    - name: creating nginx web01
      ec2:
         key_name: vprokey
