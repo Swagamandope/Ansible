@@ -232,7 +232,7 @@
            mem01
 
            [dbsrvgrp]
-           db01
+           mysql01
 
            [control]
            cntl
