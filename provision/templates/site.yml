@@ -1,0 +1,23 @@
+- name: build artifact root.war and sql file to be copied in files
+  import_playbook: build.yml
+
+- name: set host to ip mapping in etc/host file
+  import_playbook: set_host_ip_map.yml
+
+- name: setup db server
+  import_playbook: db.yml
+
+- name: deploy db
+  import_playbook: dbdeploy.yml
+
+- name: set up memcahce
+  import_playbook: mem.yml
+
+- name: set up rmq
+  import_playbook: rmq.yml
+
+- name: set up tomcat
+  import_playbook: app.yml
+
+- name: setup nginx
+  import_playbook: web.yml
