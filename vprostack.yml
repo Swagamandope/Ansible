@@ -63,7 +63,7 @@
         purge_rules: no
         rules:
          - proto: all
-           group_id: "{{vprostacksg_out.groupid}}"
+           group_id: "{{vprostacksg_out.group_id}}"
  
    - name: creating nginx web01
      ec2:
