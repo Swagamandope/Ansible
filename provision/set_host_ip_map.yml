@@ -1,15 +1,15 @@
-#- name: set hosts to ip mapping in etc/hosts file
-  #hosts: all
-#  tasks:
- #   - name: import vpc
- #     include_vars: group_vars/hostsip
+- name: Set host to ip mapping in /etc/hosts file of all the instances in the stack
+  hosts: all
+  tasks:
+    - name: Import VPC setup Variable
+      include_vars: group_vars/hostsip
 
- #   - name: update host file
-   #   blockinfile:
-   #     path: /etc/hosts
- #       block:  
-  #        {{web01_ip}}, "{{app01_ip}}", "{{rmq01_ip}}" 
-  #        {{mem01_ip}} 
- #         {{mysql_ip}}
-          
-    
+    - name: Update hosts file for all the hosts
+      blockinfile:
+        path: /etc/hosts
+        block: |
+          {{web01_ip}} web01
+          {{app01_ip}} app01
+          {{rmq01_ip}} rmq01
+          {{mc01_ip}} mc01
+          {{mysql01_ip}} db01
