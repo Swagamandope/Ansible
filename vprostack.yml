@@ -196,11 +196,11 @@
      blockinfile:
        path: provision/group_vars/hostsip
        block: 
-         web01_ip: {{web01_out.tagged_instances[0].private_ip}}
-         app01_ip: {{app01_out.tagged_instances[0].private_ip}}
-         rmq01_ip: {{rmq01_out.tagged_instances[0].private_ip}}
-         mem01_ip: {{mem01_out.tagged_instances[0].private_ip}}
-         db01_ip: {{db01_out.tagged_instances[0].private_ip}}
+         web01_ip: "{{web01_out.tagged_instances[0].private_ip}}"
+         app01_ip: "{{app01_out.tagged_instances[0].private_ip}}"
+         rmq01_ip: "{{rmq01_out.tagged_instances[0].private_ip}}"
+         mem01_ip: "{{mem01_out.tagged_instances[0].private_ip}}"
+         db01_ip: "{{db01_out.tagged_instances[0].private_ip}}"
 
    - name: copy logi key to provision diretor
      copy:
