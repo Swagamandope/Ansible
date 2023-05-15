@@ -1,0 +1,6 @@
+nginix-ami: ami-0d65710e46db3c637
+tomcat-ami: ami-0d65710e46db3c637
+mysql-ami: ami-0d65710e46db3c637
+mem-ami: ami-0d65710e46db3c637
+rmq-ami: ami-0d65710e46db3c637
+region: us-east-1

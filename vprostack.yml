@@ -1,0 +1,164 @@
+- name: Setup stack
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+   - name: import vpc set up
+     include_vars: output_vars.txt
+   
+   - name: import vpc set up
+     include_vars: vprostacksetup.txt
+
+   - name: Create vprofile ec2 key
+     ec2_key:
+         name: vprokey
+         region: "{{region}}"
+     register: vprokey_out
+
+   - name: Save key
+     copy:
+        content: "{{vprokey_out.key.private_key}}"
+        dest: "./web-key.pem"
+        mode: 0600
+     when: vprokey_out.changed
+
+   - name: create SG for load balancer
+     ec2_group:
+        name: vproLB
+        description: allow port 80 from anywhere
+        vpc_id: "{{vpcid}}"
+        region: "{{region}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+     register: vproLB_out
+    
+   - name: create SG for backend services
+     ec2_group:
+        name: backend
+        description: allow port 22 from anywhere
+        vpc_id: "{{vpcid}}"
+        region: "{{region}}"
+        purge_rules: no
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            group_id: "{{vproLB_out.group_id}}"
+
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            group_id: "{{BastionSGid}}"
+     register: vprostacksg_out
+
+   - name: creating nginx web01
+     ec2:
+        key_name: vprokey
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: "{{nginix-ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+            Name: "web01"
+            Project: db
+            Owner: devops
+        exact_count: 1
+        count_tag:
+            Name: "web01"
+            Project: db
+            Owner:  devops
+        group_id: "{{vprostacksg_out.group_id}}"
+        vpc_subnet_id: "{{privsub1id}}"
+     register: web01_out
+
+   - name: creating tomcat app01
+     ec2:
+        key_name: vprokey
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: "{{tomcat-ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+            Name: "app01"
+            Project: db
+            Owner: devops
+        exact_count: 1
+        count_tag:
+            Name: "app01"
+            Project: db
+            Owner:  devops
+        group_id: "{{vprostacksg_out.group_id}}"
+        vpc_subnet_id: "{{privsub1id}}"
+     register: app01_out
+
+   - name: creating memc mem01
+     ec2:
+        key_name: vprokey
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: "{{mem-ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+            Name: "mem01"
+            Project: db
+            Owner: devops
+        exact_count: 1
+        count_tag:
+            Name: "mem01"
+            Project: db
+            Owner:  devops
+        group_id: "{{vprostacksg_out.group_id}}"
+        vpc_subnet_id: "{{privsub1id}}"
+     register: mem01_out
+
+   - name: creating rmq rmq01
+     ec2:
+        key_name: vprokey
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: "{{rmq-ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+            Name: "rmq01"
+            Project: db
+            Owner: devops
+        exact_count: 1
+        count_tag:
+            Name: "rmq01"
+            Project: db
+            Owner:  devops
+        group_id: "{{vprostacksg_out.group_id}}"
+        vpc_subnet_id: "{{privsub1id}}"
+     register: rmq01_out
+
+
+   - name: creating db db01
+     ec2:
+        key_name: vprokey
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: "{{mysql-ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+            Name: "mysql01"
+            Project: db
+            Owner: devops
+        exact_count: 1
+        count_tag:
+            Name: "myql01"
+            Project: db
+            Owner:  devops
+        group_id: "{{vprostacksg_out.group_id}}"
+        vpc_subnet_id: "{{privsub1id}}"
+     register: mysql01_out
+
+   - debug:
+        var: db01_out      
