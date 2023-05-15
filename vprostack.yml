@@ -204,8 +204,8 @@
 
    - name: copy logi key to provision diretor
      copy:
-       src: lgin.pem
-       dest: provision/lgin.pem
+       src: web-key.pem
+       dest: provision/web-key.pem
        mode: '0400'
    
    - name: insert/update inv file provision stack
@@ -246,5 +246,5 @@
            
            [stack_inst:vars]
            ansible_user=ubuntu
-           ansible_ssh_private_key_file=lgin.pem
+           ansible_ssh_private_key_file=web-key.pem
            #ansible_python_interpreter=/usr/bin/python3
